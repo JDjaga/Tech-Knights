@@ -191,8 +191,9 @@ if (typeof document !== 'undefined') {
             const availableSlots = faculty.availableSlots.filter(slot => !faculty.bookedSlots.includes(slot));
 
             const buttonHTML = availableSlots.length
-                ? `<button onclick="openBookingForm(${faculty.id})">Book a Session</button>`
+                ? `<button class="book-session" onclick="openBookingForm(${faculty.id})">Book a Session</button>`
                 : `<button class="disabled-button" disabled>Book a Session</button>`;
+                
 
             card.innerHTML = `
                 <h3>${faculty.name}</h3>
