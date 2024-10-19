@@ -1,0 +1,174 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Body Styling */
+body {
+    background-color: #f0f4f8;
+    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Container for Faculty Cards */
+.faculty-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding:100px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+/* Faculty Cards */
+.faculty-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 800px;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.faculty-card:hover {
+    transform: translateY(-10px);
+}
+
+.faculty-card h3 {
+    color: #007BFF;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    margin:50px;
+}
+/* Add this to your CSS */
+.disabled-button {
+    background-color: grey;
+    cursor: not-allowed;
+
+}
+
+
+.faculty-card p {
+    color: #555;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+}
+
+.faculty-card button {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    padding: 20px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+    align-content: end;
+    margin-bottom: 0px;
+    margin-top: 60px;
+    padding-bottom:;
+}
+
+.faculty-card button:hover {
+    background-color: #218838;
+}
+
+/* Booking Form */
+#booking-form {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    max-width: 400px;
+    margin: 30px auto;
+    display: sticky;
+}
+
+#booking-form h3 {
+    font-size: 1.4rem;
+    color: #007BFF;
+    margin-bottom: 20px;
+    text-align: center;
+    
+}
+
+#booking-form label {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 8px;
+    padding-left: 10px;
+}
+.lab1{
+    padding-left: 120px;
+}
+.lab{
+    padding-left: 90px;
+}
+
+#booking-form select,
+#booking-form input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 1rem;
+}
+
+#booking-form button[type="submit"] {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease-in-out;
+}
+
+#booking-form button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+#close-form {
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%;
+    transition: background-color 0.3s ease-in-out;
+}
+
+#close-form:hover {
+    background-color: #5a6268;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .faculty-card {
+        width: 700px;
+        margin-left:0 px;
+        margin-left: 0;
+        
+        
+    }
+    .faculty-container{
+        padding: 12px;
+    }
+
+    #booking-form {
+        width: 90%;
+        margin: 20px auto;
+    }
+}
+
