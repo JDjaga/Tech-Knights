@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Mentorship Platform</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#mentors">Mentors</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+        <li><a href="#booking-form">Booking form</a></li>
+      </ul>
+    </nav>
+    <h1>Faculty Mentorship Platform</h1>
+    <p>Your gateway to academic guidance and career growth</p>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Search and Filters Section -->
+    <section id="search-filter">
+      <div>
+        <input type="text" id="search-mentor" placeholder="Search Mentors by Name">
+      </div>
+      <div>
+        <label for="filter-availability">Filter by Availability:</label>
+        <select id="filter-availability">
+          <option value="all">All</option>
+          <option value="available">Available</option>
+          <option value="unavailable">Unavailable</option>
+        </select>
+      </div>
+    </section>
+    
+    <!-- Mentors List Section -->
+    <section id="mentors">
+      <h2>Meet Our Faculty Mentors</h2>
+      <div class="faculty-container">
+        <!-- Faculty cards will be dynamically loaded here using JS -->
+      </div>
+    </section>
+
+    <!-- Booking Form Section -->
+    <section id="booking-form">
+      <h2>Book a Session with <span id="mentor-name"></span></h2>
+      <form id="booking">
+        <div class="lab1">
+          <label for="student-name">Your Name</label>
+        </div>
+        <input type="text" id="student-name" required>
+        <div class="lab">
+          <label for="available-slots">Select a Time Slot</label>
+        </div>
+        <select id="available-slots"></select>
+        <div class="but">
+          <button type="submit">Book Session</button>
+        </div>
+      </form>
+      <button id="close-form">Close</button>
+    </section>
+  </main>
+
+  <!-- Footer Section -->
+  <footer>
+    <p>&copy; 2024 Faculty Mentorship Platform</p>
+    <ul>
+      <li><a href="#terms">Terms of Service</a></li>
+      <li><a href="#privacy">Privacy Policy</a></li>
+      <li><a href="#about">About Us</a></li>
+    </ul>
+  </footer>
+
+  <!-- JavaScript -->
+  <script src="app.js"></script>
+</body>
+</html>
