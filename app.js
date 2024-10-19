@@ -171,105 +171,133 @@ const facultyData = [
       bookedSlots: []
     }
   ];
-// DOM manipulation code should be wrapped to ensure it's running in the browser
-if (typeof document !== 'undefined') {
-    const facultyContainer = document.querySelector('.faculty-container');
-    const bookingForm = document.getElementById('booking-form');
-    const mentorNameSpan = document.getElementById('mentor-name');
-    const availableSlotsSelect = document.getElementById('available-slots');
-    const bookingFormElement = document.getElementById('booking');
-    const studentNameInput = document.getElementById('student-name');
-    const closeFormButton = document.getElementById('close-form');
 
-    // Function to create faculty cards
-    function displayFacultyProfiles() {
-        facultyContainer.innerHTML = ''; // Clear any existing profiles
-        facultyData.forEach(faculty => {
-            const card = document.createElement('div');
-            card.classList.add('faculty-card');
 
-            const availableSlots = faculty.availableSlots.filter(slot => !faculty.bookedSlots.includes(slot));
+// Function to render the filtered faculty data
+function renderFacultyList(filteredData) {
+  const mentorList = document.querySelector('.faculty-container');
+  mentorList.innerHTML = ''; // Clear previous results
 
-            const buttonHTML = availableSlots.length
-                ? `<button onclick="openBookingForm(${faculty.id})">Book a Session</button>`
-                : `<button class="disabled-button" disabled>Book a Session</button>`;
+  filteredData.forEach(faculty => {
+      const availableSlots = faculty.availableSlots.filter(slot => !faculty.bookedSlots.includes(slot));
+      const card = document.createElement('div');
+      card.classList.add('faculty-card');
 
-            card.innerHTML = `
-                <h3>${faculty.name}</h3>
-                <p><strong>Qualifications:</strong> ${faculty.qualifications}</p>
-                <p><strong>Phone:</strong> ${faculty.phone || 'N/A'}</p>
-                <p><strong>Email:</strong> ${faculty.email}</p>
-                <p><strong>Available Slots:</strong> ${availableSlots.length ? availableSlots.join(', ') : 'No slots available'}</p>
-                ${buttonHTML}
-            `;
+      const buttonHTML = availableSlots.length
+          ? `<button onclick="openBookingForm(${faculty.id})">Book a Session</button>`
+          : `<button class="disabled-button" disabled>Book a Session</button>`;
 
-            facultyContainer.appendChild(card);
-        });
-    }
+      card.innerHTML = `
+          <h3>${faculty.name}</h3>
+          <p><strong>Qualifications:</strong> ${faculty.qualifications}</p>
+          <p><strong>Phone:</strong> ${faculty.phone || 'N/A'}</p>
+          <p><strong>Email:</strong> ${faculty.email}</p>
+          <p><strong>Available Slots:</strong> ${availableSlots.length ? availableSlots.join(', ') : 'No slots available'}</p>
+          ${buttonHTML}
+      `;
 
-    // Function to open booking form
-    window.openBookingForm = function (facultyId) {
-        const selectedFaculty = facultyData.find(faculty => faculty.id === facultyId);
-        mentorNameSpan.textContent = selectedFaculty.name;
-
-        // Clear previous options
-        availableSlotsSelect.innerHTML = '';
-
-        // Populate available slots that aren't booked
-        selectedFaculty.availableSlots.forEach(slot => {
-            if (!selectedFaculty.bookedSlots.includes(slot)) {
-                const option = document.createElement('option');
-                option.value = slot;
-                option.textContent = slot;
-                availableSlotsSelect.appendChild(option);
-            }
-        });
-
-        // Show booking form and scroll to it
-        bookingForm.style.display = 'block';
-        bookingForm.scrollIntoView({ behavior: 'smooth' }); // Scroll to the booking form
-        bookingFormElement.dataset.facultyId = facultyId; // Set data-facultyId to track which faculty is being booked
-    };
-
-    // Function to close booking form
-    closeFormButton.addEventListener('click', () => {
-        bookingForm.style.display = 'none';
-    });
-
-    // Function to book a slot
-    bookingFormElement.addEventListener('submit', (event) => {
-        event.preventDefault();
-
-        const facultyId = parseInt(bookingFormElement.dataset.facultyId);
-        const selectedFaculty = facultyData.find(faculty => faculty.id === facultyId);
-        const selectedSlot = availableSlotsSelect.value;
-        const studentName = studentNameInput.value.trim();
-
-        // Check if a student name and slot are provided
-        if (studentName && selectedSlot) {
-            // Add the slot to booked slots
-            selectedFaculty.bookedSlots.push(selectedSlot);
-
-            // Log the booking (this can be expanded to store or send data)
-            console.log(`Session booked with ${selectedFaculty.name} at ${selectedSlot} for ${studentName}`);
-
-            // Hide booking form
-            bookingForm.style.display = 'none';
-
-            // Optionally, you can refresh the faculty profiles to update the available slots on the UI
-            displayFacultyProfiles(); // Redisplay profiles to update UI
-        } else {
-            alert('Please enter your name and select a slot.');
-        }
-    });
-
-    // Initial call to display faculty profiles
-    displayFacultyProfiles();
-
-    // Scroll to the booking form when the link is clicked
-    document.querySelector('a[href="#booking-form"]').addEventListener('click', (event) => {
-        event.preventDefault();
-        bookingForm.scrollIntoView({ behavior: 'smooth' });
-        bookingForm.style.display = 'block'; // Show the booking form when link is clicked
-    });
+      mentorList.appendChild(card);
+  });
 }
+
+// Initial render with all data
+renderFacultyList(facultyData);
+
+// Function to filter faculty based on search input and availability
+function filterFaculty() {
+  const searchValue = document.getElementById('search-mentor').value.toLowerCase();
+  const availabilityValue = document.getElementById('filter-availability').value;
+
+  const filteredData = facultyData.filter(faculty => {
+      const matchesName = faculty.name.toLowerCase().includes(searchValue);
+      const availableSlots = faculty.availableSlots.filter(slot => !faculty.bookedSlots.includes(slot));
+      const isAvailable = availableSlots.length > 0;
+
+      const matchesAvailability = 
+          availabilityValue === 'all' || 
+          (availabilityValue === 'available' && isAvailable) || 
+          (availabilityValue === 'unavailable' && !isAvailable);
+
+      return matchesName && matchesAvailability;
+  });
+
+  renderFacultyList(filteredData);
+}
+
+// Attach event listeners to search input and filter dropdown
+document.getElementById('search-mentor').addEventListener('input', filterFaculty);
+document.getElementById('filter-availability').addEventListener('change', filterFaculty);
+
+// DOM manipulation code for booking
+const bookingForm = document.getElementById('booking-form');
+const mentorNameSpan = document.getElementById('mentor-name');
+const availableSlotsSelect = document.getElementById('available-slots');
+const bookingFormElement = document.getElementById('booking');
+const studentNameInput = document.getElementById('student-name');
+const closeFormButton = document.getElementById('close-form');
+
+// Function to open booking form
+window.openBookingForm = function (facultyId) {
+  const selectedFaculty = facultyData.find(faculty => faculty.id === facultyId);
+  mentorNameSpan.textContent = selectedFaculty.name;
+
+  // Clear previous options
+  availableSlotsSelect.innerHTML = '';
+
+  // Populate available slots that aren't booked
+  selectedFaculty.availableSlots.forEach(slot => {
+      if (!selectedFaculty.bookedSlots.includes(slot)) {
+          const option = document.createElement('option');
+          option.value = slot;
+          option.textContent = slot;
+          availableSlotsSelect.appendChild(option);
+      }
+  });
+
+  // Show booking form and scroll to it
+  bookingForm.style.display = 'block';
+  bookingForm.scrollIntoView({ behavior: 'smooth' }); // Scroll to the booking form
+  bookingFormElement.dataset.facultyId = facultyId; // Set data-facultyId to track which faculty is being booked
+};
+
+// Function to close booking form
+closeFormButton.addEventListener('click', () => {
+  bookingForm.style.display = 'none';
+});
+
+// Function to book a slot
+bookingFormElement.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  const facultyId = parseInt(bookingFormElement.dataset.facultyId);
+  const selectedFaculty = facultyData.find(faculty => faculty.id === facultyId);
+  const selectedSlot = availableSlotsSelect.value;
+  const studentName = studentNameInput.value.trim();
+
+  // Check if a student name and slot are provided
+  if (studentName && selectedSlot) {
+      // Add the slot to booked slots
+      selectedFaculty.bookedSlots.push(selectedSlot);
+
+      // Log the booking (this can be expanded to store or send data)
+      console.log(`Session booked with ${selectedFaculty.name} at ${selectedSlot} for ${studentName}`);
+
+      // Hide booking form
+      bookingForm.style.display = 'none';
+
+      // Optionally, you can refresh the faculty profiles to update the available slots on the UI
+      filterFaculty(); // Redisplay profiles to update UI based on filter
+  } else {
+      alert('Please enter your name and select a slot.');
+  }
+});
+
+// Initial call to display faculty profiles
+renderFacultyList(facultyData);
+
+// Scroll to the booking form when the link is clicked
+document.querySelector('a[href="#booking-form"]').addEventListener('click', (event) => {
+  event.preventDefault();
+  bookingForm.scrollIntoView({ behavior: 'smooth' });
+  bookingForm.style.display = 'block'; // Show the booking form when link is clicked
+});

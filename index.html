@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faculty Mentorship Platform</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faculty Mentorship Platform</title>
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
   <!-- Navigation Bar -->
@@ -39,6 +41,8 @@
       </div>
     </section>
     
+    <ul id="mentor-list"></ul>
+
     <!-- Mentors List Section -->
     <section id="mentors">
       <h2>Meet Our Faculty Mentors</h2>
@@ -49,7 +53,7 @@
 
     <!-- Booking Form Section -->
     <section id="booking-form">
-      <h2>Book a Session with <span id="mentor-name"></span></h2>
+      <h2 class="">Book a Session with <span id="mentor-name"></span></h2>
       <form id="booking">
         <div class="lab1">
           <label for="student-name">Your Name</label>
@@ -59,7 +63,7 @@
           <label for="available-slots">Select a Time Slot</label>
         </div>
         <select id="available-slots"></select>
-        <div class="but">
+        <div class="but" >
           <button type="submit">Book Session</button>
         </div>
       </form>
@@ -80,4 +84,5 @@
   <!-- JavaScript -->
   <script src="app.js"></script>
 </body>
+
 </html>
